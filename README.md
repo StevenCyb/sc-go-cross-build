@@ -1,6 +1,16 @@
 # sc-go-cross-build
 A golang cross build action
 
+On Linux or macOS, run:
+
+chmod +x entrypoint.sh
+git add entrypoint.sh
+git commit
+On Windows, run:
+
+git add --chmod=+x -- entrypoint.sh
+git commit
+
 sc-go-cross-build
 A golang cross build and public action.
 github go golang release action cross-build
