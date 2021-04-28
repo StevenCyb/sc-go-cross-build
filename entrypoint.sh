@@ -68,6 +68,7 @@ else
   echo "[LOG]   : No go.mod file"
 
   ROOT="/go/src/github.com/${GITHUB_REPOSITORY}"
+  mkdir -p $ROOT
   
   echo "          Copy content to ${ROOT}"
   cp -r * $ROOT
