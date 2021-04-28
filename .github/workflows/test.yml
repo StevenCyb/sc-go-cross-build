@@ -13,14 +13,14 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         platform: "linux/386"
         include-files: "README.md"
-  # release-linux-amd64:
-  #   name: release linux/amd64
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@master
-  #   - name: Compile and upload release
-  #     uses: ./
-  #     with: 
-  #       github-token: ${{ secrets.GITHUB_TOKEN }}
-  #       platform: "linux/amd64"
-  #       include-files: "README.md"
+  release-linux-amd64:
+    name: release linux/amd64
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Compile and upload release
+      uses: ./
+      with: 
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        platform: "linux/amd64"
+        include-files: "README.md"
