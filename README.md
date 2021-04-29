@@ -29,7 +29,6 @@ There may be some more. Run `go tool dist list` to get a list of supported platf
 **Optional** A comma separated list of files that should be included in release archive, e.g. `"README.md LICENSE"`.
 
 ## Example usage
-TODO: replace `uses: ./` with marked name 
 ```yaml
 # Only work on publish (otherwise no upload URL is provided by Github events)
 on:
@@ -43,7 +42,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Compile and upload release
-      uses: ./
+      uses: StevenCyb/sc-go-cross-build@0.1.0
       with: 
         github-token: ${{ secrets.GITHUB_TOKEN }}
         platform: "linux/386"
@@ -54,7 +53,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Compile and upload release
-      uses: ./
+      uses: StevenCyb/sc-go-cross-build@0.1.0
       with: 
         github-token: ${{ secrets.GITHUB_TOKEN }}
         platform: "linux/amd64"
@@ -65,7 +64,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Compile and upload release
-      uses: ./
+      uses: StevenCyb/sc-go-cross-build@0.1.0
       with: 
         github-token: ${{ secrets.GITHUB_TOKEN }}
         platform: "linux/arm"
@@ -76,7 +75,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Compile and upload release
-      uses: ./
+      uses: StevenCyb/sc-go-cross-build@0.1.0
       with: 
         github-token: ${{ secrets.GITHUB_TOKEN }}
         platform: "windows/386"
@@ -87,7 +86,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Compile and upload release
-      uses: ./
+      uses: StevenCyb/sc-go-cross-build@0.1.0
       with: 
         github-token: ${{ secrets.GITHUB_TOKEN }}
         platform: "windows/amd64"
