@@ -16,30 +16,30 @@ INCLUDE_FILES=$3
 echo "[LOG]     : Run build for platform ${PLATFORM}"
 
 if [ -z "${GITHUB_TOKEN}" ]; then
-  echo "[ERROR]   : 'github-token' not set, set it as follows:"
-  echo "            with:"
-  echo "              github-token: \${{ secrets.GITHUB_TOKEN }}"
+  echo "::error [ERROR]   : 'github-token' not set, set it as follows:"
+  echo "             with:"
+  echo "               github-token: \${{ secrets.GITHUB_TOKEN }}"
   exit 1
 fi
 
 if [ -z "${PLATFORM}" ]; then
-  echo "[ERROR]   : 'platform' not set, set it as follows:"
-  echo "            with:"
-  echo "              platform: 'XXX'"
-  echo "            where 'XXX' is one of {$(go tool dist list | awk '{print}' ORS=' ')}"
+  echo "::error [ERROR]   : 'platform' not set, set it as follows:"
+  echo "             with:"
+  echo "               platform: 'XXX'"
+  echo "             where 'XXX' is one of {$(go tool dist list | awk '{print}' ORS=' ')}"
   exit 1
 fi
 
 if [ -z $(go tool dist list | grep -oE "^${PLATFORM}(\r)?(\n)?$") ]; then
-  echo "[ERROR]   : Unsupported platform ${PLATFORM}"
-  echo "            Choos one of {$(go tool dist list | awk '{print}' ORS=' ')}"
+  echo "::error [ERROR]   : Unsupported platform ${PLATFORM}"
+  echo "             Choos one of {$(go tool dist list | awk '{print}' ORS=' ')}"
   exit 1
 fi
 
 if [ -z "${INCLUDE_FILES}" ]; then
   echo "[INFO]    : No files to include specified."
 else
-  echo "            and include files ${INCLUDE_FILES} "
+  echo "             and include files ${INCLUDE_FILES} "
 fi
 
 ### 
@@ -51,7 +51,7 @@ PROJECT_NAME=$(basename $GITHUB_REPOSITORY)
 export GOOS=$(echo $PLATFORM | grep -oE '^[a-z0-9]*')
 export GOARCH=$(echo $PLATFORM | grep -oE '[a-z0-9]*$')
 
-echo "            Use GOOS=${GOOS}, GOARCH=${GOARCH}"
+echo "             Use GOOS=${GOOS}, GOARCH=${GOARCH}"
 
 if [ -f "go.mod" ]; then
   # If go mod used
@@ -60,17 +60,17 @@ if [ -f "go.mod" ]; then
   export GO111MODULE=on
   export CGO_ENABLED=0
 
-  echo "          Download and verify dependencies"
+  echo "           Download and verify dependencies"
   go mod download
   go mod verify
 else
   # If no go mod used
-  echo "[WARNING] : No go.mod file"
-  echo "            Create go mod for ${PROJECT_NAME}"
+  echo "::warning [WARNING] : No go.mod file"
+  echo "             Create go mod for ${PROJECT_NAME}"
 
   go mod init $PROJECT_NAME
 
-  echo "            Go get..."
+  echo "             Go get..."
   go get -v ./...
 fi
 
@@ -98,7 +98,7 @@ INCLUDE_FILES=$(echo "${INCLUDE_FILES}" | awk '{$1=$1};1')
 echo "[LOG]     : Create archive..."
 
 ARCHIVE_NAME=""
-if [[ $PLATFORM == windows_* ]]; then
+if [[ $PLATFORM == windows* ]]; then
   ARCHIVE_NAME="release.zip"
   zip -r $ARCHIVE_NAME $INCLUDE_FILES
 else
