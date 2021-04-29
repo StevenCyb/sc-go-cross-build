@@ -76,7 +76,7 @@ fi
 
 # Define file name based on windows or linux
 FILE_NAME=""
-if [[ $PLATFORM == windows* ]]; then
+if [[ $PLATFORM =~ ^windows* ]]; then
   FILE_NAME="${PROJECT_NAME}.exe"
 else
   FILE_NAME="${PROJECT_NAME}"
@@ -98,7 +98,7 @@ INCLUDE_FILES=$(echo "${INCLUDE_FILES}" | awk '{$1=$1};1')
 echo "[LOG]     : Create archive..."
 
 ARCHIVE_NAME=""
-if [[ $PLATFORM == windows* ]]; then
+if [[ $PLATFORM =~ ^windows* ]]; then
   ARCHIVE_NAME="release.zip"
   zip -r $ARCHIVE_NAME $INCLUDE_FILES
 else

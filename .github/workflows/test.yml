@@ -1,0 +1,28 @@
+# Only work on release!
+on:
+  release:
+    types: [published]
+
+jobs:
+  release-linux-386:
+    name: release linux/386
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Compile and upload release
+      uses: ./
+      with: 
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        platform: "linux/386"
+        include-files: "README.md"
+  release-windows-386:
+    name: release windows/386
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Compile and upload release
+      uses: ./
+      with: 
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        platform: "windows/386"
+        include-files: "README.md"
