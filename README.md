@@ -1,61 +1,95 @@
 # sc-go-cross-build
-A golang cross build action
+A golang cross build docker action. 
 
-On Linux or macOS, run:
+## Inputs
 
-chmod +x entrypoint.sh
-git add entrypoint.sh
-git commit
-On Windows, run:
+### `github-token`
+**Required** Set this to `${{ secrets.GITHUB_TOKEN }}`.
 
-git add --chmod=+x -- entrypoint.sh
-git commit
+### `platform`
+**Required** The platform (GOOS and GOARCH), choose one of:
+* aix: `aix/ppc64`
+* android: `android/386` `android/amd64` `android/arm` `android/arm64`
+* darwin: `darwin/amd64` `darwin/arm64`
+* dragonfly: `dragonfly/amd64`
+* freebsd: `freebsd/386` `freebsd/amd64` `freebsd/arm` `freebsd/arm64`
+* illumos: `illumos/amd64`
+* ios: `ios/amd64` `ios/arm64`
+* js: `js/wasm`
+* linux: `linux/386` `linux/amd64` `linux/arm` `linux/arm64` `linux/mips` `linux/mips64` `linux/mips64le` `linux/mipsle` `linux/ppc64` `linux/ppc64le` `linux/riscv64` `linux/s390x`
+* netbsd: `netbsd/386` `netbsd/amd64` `netbsd/arm` `netbsd/arm64`
+* openbsd: `openbsd/386` `openbsd/amd64` `openbsd/arm` `openbsd/arm64` `openbsd/arm64` `openbsd/mips64`
+* plan9: `plan9/386` `plan9/amd64` `plan9/arm`
+* solaris: `solaris/amd64`
+* windows: `windows/386` `windows/amd64` `windows/arm`
 
-sc-go-cross-build
-A golang cross build and public action.
-github go golang release action cross-build
+There may be some more. Run `go tool dist list` to get a list of supported platforms.
 
-aix/ppc64
-android/386
-android/amd64
-android/arm
-android/arm64
-darwin/amd64
-darwin/arm64
-dragonfly/amd64
-freebsd/386
-freebsd/amd64
-freebsd/arm
-freebsd/arm64
-illumos/amd64
-ios/amd64
-ios/arm64
-js/wasm
-linux/386
-linux/amd64
-linux/arm
-linux/arm64
-linux/mips
-linux/mips64
-linux/mips64le
-linux/mipsle
-linux/ppc64
-linux/ppc64le
-linux/riscv64
-linux/s390x
-netbsd/386
-netbsd/amd64
-netbsd/arm
-netbsd/arm64
-openbsd/386
-openbsd/amd64
-openbsd/arm
-openbsd/arm64
-openbsd/mips64
-plan9/386
-plan9/amd64
-plan9/arm
-solaris/amd64
-windows/386
-windows/amd64
-windows/arm
+### `include-files`
+**Optional** A comma separated list of files that should be included in release archive, e.g. `"README.md LICENSE"`.
+
+## Example usage
+TODO: replace `uses: ./` with marked name 
+```yaml
+# Only work on publish (otherwise no upload URL is provided by Github events)
+on:
+  release:
+    types: [published]
+
+jobs:
+  release-linux-386:
+    name: release linux/386
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Compile and upload release
+      uses: ./
+      with: 
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        platform: "linux/386"
+        include-files: "README.md"
+  release-linux-amd64:
+    name: release linux/amd64
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Compile and upload release
+      uses: ./
+      with: 
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        platform: "linux/amd64"
+        include-files: "README.md"
+  release-linux-arm:
+    name: release linux/arm
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Compile and upload release
+      uses: ./
+      with: 
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        platform: "linux/arm"
+        include-files: "README.md"
+  release-windows-386:
+    name: release windows/386
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Compile and upload release
+      uses: ./
+      with: 
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        platform: "windows/386"
+        include-files: "README.md"
+  release-windows-amd64:
+    name: release windows/amd64
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Compile and upload release
+      uses: ./
+      with: 
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        platform: "windows/amd64"
+        include-files: "README.md"
+```
