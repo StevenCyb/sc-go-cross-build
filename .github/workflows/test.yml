@@ -1,5 +1,7 @@
 # Only work on release!
-on: release
+on:
+  release:
+    types: [published]
 
 jobs:
   release-linux-386:
