@@ -65,7 +65,7 @@ if [ -f "go.mod" ]; then
   go mod verify
 else
   # If no go mod used
-  echo "[LOG]   : No go.mod file"
+  echo "[LOG]   : Build without go.mod file"
 
   ROOT="/go/src/github.com/${GITHUB_REPOSITORY}"
   mkdir -p $ROOT
@@ -73,9 +73,6 @@ else
   echo "          Copy content to ${ROOT}"
   cp -r * $ROOT
   cd $ROOT
-
-  echo "          Go get..."
-  go get -v ./...
 fi
 
 # Define file name based on windows or linux
@@ -124,14 +121,14 @@ echo "[LOG]   : Upload to ${UPLOAD_URL}"
 
 # archive
 echo "[LOG]   : Upload ${ARCHIVE_NAME}"
-curl -X POST --data-binary @${ARCHIVE_NAME} \
+curl -s -X POST --data-binary @${ARCHIVE_NAME} \
   -H 'Content-Type: application/octet-stream' \
   -H "Authorization: Bearer ${GITHUB_TOKEN}" \
   "${UPLOAD_URL}?name=${RELEASE_NAME}.${ARCHIVE_NAME}"
 
 # checksum
 echo "[LOG]   : Upload ${RELEASE_NAME}_checksum.md5"
-curl -X POST --data $CHECKSUM \
+curl -s -X POST --data $CHECKSUM \
   -H 'Content-Type: text/plain' \
   -H "Authorization: Bearer ${GITHUB_TOKEN}" \
   "${UPLOAD_URL}?name=${RELEASE_NAME}_checksum.md5"
