@@ -76,7 +76,7 @@ fi
 
 # Define file name based on windows or linux
 FILE_NAME=""
-if [[ $PLATFORM == windows_* ]]; then
+if [[ $PLATFORM == windows* ]]; then
   FILE_NAME="${PROJECT_NAME}.exe"
 else
   FILE_NAME="${PROJECT_NAME}"
