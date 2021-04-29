@@ -26,3 +26,36 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         platform: "linux/amd64"
         include-files: "README.md"
+  release-linux-arm:
+    name: release linux/arm
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Compile and upload release
+      uses: ./
+      with: 
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        platform: "linux/arm"
+        include-files: "README.md"
+  release-windows-386:
+    name: release windows/386
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Compile and upload release
+      uses: ./
+      with: 
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        platform: "windows/386"
+        include-files: "README.md"
+  release-windows-amd64:
+    name: release windows/amd64
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Compile and upload release
+      uses: ./
+      with: 
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        platform: "windows/amd64"
+        include-files: "README.md"
